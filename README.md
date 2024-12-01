@@ -1,1 +1,2 @@
-a simple shell with cd, ls, pwd, type, echo, and exit commands.
+a simple shell I made in python. 
+Currently supports exit, echo, type, pwd, help, cd, and cat commands
