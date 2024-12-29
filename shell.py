@@ -10,84 +10,20 @@ import subprocess
 
         
 
-# git commands 
- 
-def git_clone(*args):
-    if(args[0] == []):
-        print("git clone: missing argument, enter valid https url")   
+
+def git_command(*args):
+    if not args[0]:
+        print("git: missing argument")
     else:
-        cmd=["git","clone"]
+        cmd=["git"]
         for arg in args[0]:
-            cmd=cmd+[arg]
+            cmd.append(arg)
         try:
-            print(f"Cloning repository: {args[0][0]}...")
             subprocess.run(cmd, check=True)
-            print("Repository cloned successfully.")
         except subprocess.CalledProcessError as e:
             print(f"Failed to clone repository. Error code: {e.returncode}")
         except FileNotFoundError:
             print("Git is not installed or not found in PATH.")
-
-
-def git_pull(*args):
-    if not args or not args[0]: 
-        try:
-            print("Pulling updates for the current repository...")
-            subprocess.run(["git", "pull"], check=True)
-            print("Repository updated successfully.")
-        except subprocess.CalledProcessError as e:
-            print(f"Failed to pull updates. Error code: {e.returncode}")
-        except FileNotFoundError:
-            print("Git is not installed or not found in PATH.")
-    else:
-        print(f"git pull: too many arguments. Usage: git pull")
-
-def git_status(*args):
-    if args:
-        print(f"git status: too many arguments. Usage: git status")
-    try:
-        subprocess.run(["git", "status"], check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to check status. Error code: {e.returncode}")
-    except FileNotFoundError:
-        print("Git is not installed or not found in PATH.")
-
-def git_add(*args):
-    if not args or not args[0]:
-        print("git add: missing argument, specify files or use '.'")
-    else:
-        try:
-            subprocess.run(["git", "add"] + args[0][0], check=True)
-            print("Files staged successfully.")
-        except subprocess.CalledProcessError as e:
-            print(f"Failed to add files. Error code: {e.returncode}")
-        except FileNotFoundError:
-            print("Git is not installed or not found in PATH.")
-
-def git_init(*args):
-    if args:
-        print(f"git init: too many arguments. Usage: git init")
-            
-git_commands={
-        "clone":git_clone,
-        "pull":git_pull,
-        "init":git_init,
-        "status":git_status,
-        "add":git_add
-
-
-    }  
-    
-def git_command(*args):
-    if(not args or not args[0] or args[0] == []):
-        print(f"git: missing argument, avaliable commands: clone{', '.join(git_commands.keys())}")
-    else:
-        subcommand = args[0][0] 
-        print(subcommand)
-        if subcommand in git_commands: 
-            git_commands[subcommand](args[0][1:]) 
-        else:
-            print(f"git: '{subcommand}' is not a git command. Available commands: {', '.join(git_commands.keys())}")
 
 
 
