@@ -1,0 +1,2 @@
+readline>=8.1
+python_version>="3.9"

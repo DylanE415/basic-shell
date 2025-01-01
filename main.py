@@ -1,7 +1,6 @@
 import sys
 import os
 import subprocess
-import pathlib
 import shlex
 from donut import draw_donut
 import readline 
