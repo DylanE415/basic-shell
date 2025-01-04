@@ -104,38 +104,26 @@ def donut(args):
         print(e)
 
 
-import subprocess
+if sys.platform == "darwin":  #mac
+    def launch_vim(args):
+        vim_path = os.path.join(os.getcwd(), "macvim", "bin", "vim")
 
-def vi(args):
-    if len(args) != 1:
-        print("vi: too many arguments")
-        return
+        if not os.path.isfile(vim_path):
+            print(f"Error: vim binary not found at {vim_path}")
+            return
+        os.environ["VIMRUNTIME"] = os.path.join(os.getcwd(), "macvim", "resources", "vim", "runtime")
 
-    filename = args[0]
-    try:
-        # Launch vi ensuring it inherits the terminal's file descriptors
-        subprocess.run(['vi', filename], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr)
-    except FileNotFoundError:
-        print("vi: command not found")
-    except Exception as e:
-        print(f"Error: {e}")
+        vim_args = [vim_path]
+        if args:
+            vim_args.extend(args)
 
-def launch_vim(args):
-    vim_path = os.path.join(os.getcwd(), "macvim", "bin", "vim")
-
-    if not os.path.isfile(vim_path):
-        print(f"Error: vim binary not found at {vim_path}")
-        return
-    os.environ["VIMRUNTIME"] = os.path.join(os.getcwd(), "macvim", "resources", "vim", "runtime")
-
-    vim_args = [vim_path]
-    if args:
-        vim_args.extend(args)
-
-    try:
-        subprocess.run([vim_path] + args)
-    except Exception as e:
-        print(f"Error: {e}")
+        try:
+            subprocess.run([vim_path] + args)
+        except Exception as e:
+            print(f"Error: {e}")
+else:
+    def launch_vim(args):
+        print("vim functionality is not available on this operating system.")
 
 
 
