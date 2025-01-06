@@ -1,2 +1,2 @@
-readline>=8.1
-python_version>="3.9"
+readline==6.2.4.1
+#python_version>="3.9"
